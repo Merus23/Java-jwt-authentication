@@ -1,6 +1,10 @@
 package com.example.login_auth_api.models;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
@@ -9,17 +13,23 @@ public class User {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String name;
+    private List<String> roles;
     private String email;
     private String password;
 
-    public User(String id, String name, String email, String password) {
+    public User(String id, String name, List<String> roles, String email, String password) {
         this.id = id;
         this.name = name;
+        this.roles = roles;
         this.email = email;
         this.password = password;
     }
 
     public User() {}
+
+    public List<SimpleGrantedAuthority> getAuthorities (){
+        return this.getRoles().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+    }
 
     public String getId() {
         return id;
@@ -35,6 +45,14 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
     }
 
     public String getEmail() {
