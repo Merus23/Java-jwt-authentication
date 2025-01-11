@@ -2,7 +2,6 @@ package com.example.login_auth_api.security;
 
 import com.example.login_auth_api.models.User;
 import com.example.login_auth_api.repositories.UserRepository;
-import com.example.login_auth_api.services.TokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,8 +31,9 @@ public class SecurityFilter extends OncePerRequestFilter {
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
-    }
 
+        filterChain.doFilter(request, response);
+    }
 
     private String recoverToken(HttpServletRequest request){
         var authHeader = request.getHeader("Authorization");

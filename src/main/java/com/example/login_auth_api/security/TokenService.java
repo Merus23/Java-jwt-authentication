@@ -1,4 +1,4 @@
-package com.example.login_auth_api.services;
+package com.example.login_auth_api.security;
 
 
 import com.auth0.jwt.JWT;
@@ -7,9 +7,11 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.example.login_auth_api.models.User;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
+@Service
 public class TokenService {
 
     private final Long validityInMilliseconds = 3600000L;
